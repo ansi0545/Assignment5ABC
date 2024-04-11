@@ -1,20 +1,26 @@
-﻿namespace Assignment5ABC.ContactFiles
+﻿// Contact.cs
+namespace Assignment5ABC.ContactFiles
 {
-
     internal class Contact
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Address Address { get; set; }
-        public Email Email { get; set; }
-        public Phone Phone { get; set; }
+        private string firstName;
+        private string lastName;
+        private Address address;
+        private Email email;
+        private Phone phone;
+
+        public string FirstName { get => firstName; set => firstName = value; }
+        public string LastName { get => lastName; set => lastName = value; }
+        public Address Address { get => address; set => address = value; }
+        public Email Email { get => email; set => email = value; }
+        public Phone Phone { get => phone; set => phone = value; }
 
         // Constructor
         public Contact()
         {
+            Address = new Address();
             Email = new Email();
             Phone = new Phone();
-            Address = new Address();
         }
 
         // Method to perform validation

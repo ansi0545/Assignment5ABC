@@ -1,12 +1,15 @@
-﻿using Assignment5ABC.ContactFiles;
+﻿// Customer.cs
+using Assignment5ABC.ContactFiles;
 
 namespace Assignment5ABC
 {
-
     internal class Customer
     {
-        public string ID { get; set; }
-        public Contact ContactInfo { get; set; }
+        private string id;
+        private Contact contactInfo;
+
+        public string ID { get => id; set => id = value; }
+        public Contact ContactInfo { get => contactInfo; set => contactInfo = value; }
 
         // Constructor
         public Customer()

@@ -1,7 +1,8 @@
-﻿
+﻿// CustomerManager.cs
+using System.Collections.Generic;
+
 namespace Assignment5ABC
 {
-
     internal class CustomerManager
     {
         private List<Customer> customers;
@@ -10,6 +11,8 @@ namespace Assignment5ABC
         {
             customers = new List<Customer>();
         }
+
+        public IReadOnlyList<Customer> Customers => customers;
 
         public void AddCustomer(Customer customer)
         {
@@ -23,13 +26,13 @@ namespace Assignment5ABC
                 customers.RemoveAt(index);
             }
         }
-       public void ChangeCustomerData(int index, Customer customer)
+
+        public void ChangeCustomerData(int index, Customer customer)
         {
             if (index >= 0 && index < customers.Count)
             {
                 customers[index] = customer;
             }
         }
-
     }
 }
