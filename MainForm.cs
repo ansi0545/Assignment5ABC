@@ -24,6 +24,7 @@ namespace Assignment5ABC
             }
         }
 
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             int selectedIndex = listBoxCompleteContact.SelectedIndex;
@@ -33,7 +34,7 @@ namespace Assignment5ABC
                 if (contactForm.ShowDialog() == DialogResult.OK)
                 {
                     Customer updatedCustomer = customerManager.Customers[selectedIndex]; // Get the selected customer
-                    updatedCustomer.ContactInfo = contactForm.Contact; // Update the contact info
+                    updatedCustomer.ContactInfo = contactForm.GetContact(); // Update the contact info
                     customerManager.ChangeCustomerData(selectedIndex, updatedCustomer); // Pass the updated customer to ChangeCustomerData method
                 }
             }
@@ -42,6 +43,7 @@ namespace Assignment5ABC
                 MessageBox.Show("Please select a customer to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         private void btnDelete_Click(object sender, EventArgs e)

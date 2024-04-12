@@ -38,10 +38,18 @@ namespace Assignment5ABC
 
         internal Contact GetContact()
         {
-            // Retrieve the contact information from the form fields and update the contact object
+            // Update the contact information from the form fields
             contact.FirstName = txtBoxFirstName.Text;
             contact.LastName = txtBoxLastName.Text;
-            // Update other contact properties similarly
+            contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
+            contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
+            contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
+            contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
+            contact.Address.Street = textBox4.Text;
+            contact.Address.ZipCode = textBox3.Text;
+            contact.Address.City = textBox1.Text;
+            contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+
             return contact;
         }
 
@@ -119,7 +127,7 @@ namespace Assignment5ABC
             contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
         }
 
-        
-        }
+
     }
+}
 
