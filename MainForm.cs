@@ -13,7 +13,12 @@ namespace Assignment5ABC
         {
             InitializeComponent();
             customerManager = new CustomerManager();
-            contactForm = new ContactForm(); // Initialize ContactForm instance
+            contactForm = new ContactForm();
+            SubscribeToEvents();
+        }
+
+         private void SubscribeToEvents()
+        {
             btnAddMainForm.Click += btnAddMainForm_Click;
             btnEditMainForm.Click += btnEditMainForm_Click;
             btnDeleteMainForm.Click += btnDeleteMainForm_Click;

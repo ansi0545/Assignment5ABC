@@ -25,7 +25,13 @@ namespace Assignment5ABC
             UpdateFormFields();
         }
 
-        public Contact Contact => contact;
+        private Contact _contact;
+
+        public Contact Contact 
+        { 
+            get { return _contact; } 
+            private set { _contact = value; } 
+        }
 
         internal void UpdateFormFields()
         {
@@ -134,9 +140,12 @@ namespace Assignment5ABC
             contact.Address.City = textBox1.Text;
         }
 
-        private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
+         private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+            if (comboBoxCountryContactList.SelectedItem != null)
+            {
+                contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+            }
         }
 
 

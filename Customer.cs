@@ -30,7 +30,7 @@ namespace Assignment5ABC
         {
             if (ContactInfo != null)
             {
-            return string.Format("{0} - {1} {2}, {3}, {4}", ID, ContactInfo.FirstName, ContactInfo.LastName, ContactInfo.Phone.OfficePhone, ContactInfo.Email.Work);
+            return string.Format("{0}                 {1}                 {2}                {3}                 {4}", ID, ContactInfo.LastName, ContactInfo.FirstName, ContactInfo.Phone.OfficePhone, ContactInfo.Email.Work);
             }
             else
             {
