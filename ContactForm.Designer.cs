@@ -51,6 +51,8 @@
             lblStreetContactForm = new Label();
             textBox3 = new TextBox();
             textBox4 = new TextBox();
+            btnOKContactForm = new Button();
+            btnCancelContactForm = new Button();
             groupBoxNameContactForm.SuspendLayout();
             grpBoxEmailAndPhoneContactForm.SuspendLayout();
             grpBoxAdressContactForm.SuspendLayout();
@@ -275,11 +277,33 @@
             textBox4.TabIndex = 0;
             textBox4.TextChanged += textBox4_TextChanged;
             // 
+            // btnOKContactForm
+            // 
+            btnOKContactForm.Location = new Point(179, 677);
+            btnOKContactForm.Name = "btnOKContactForm";
+            btnOKContactForm.Size = new Size(112, 34);
+            btnOKContactForm.TabIndex = 3;
+            btnOKContactForm.Text = "OK";
+            btnOKContactForm.UseVisualStyleBackColor = true;
+            btnOKContactForm.Click += btnOKContactForm_Click;
+            // 
+            // btnCancelContactForm
+            // 
+            btnCancelContactForm.Location = new Point(470, 677);
+            btnCancelContactForm.Name = "btnCancelContactForm";
+            btnCancelContactForm.Size = new Size(112, 34);
+            btnCancelContactForm.TabIndex = 4;
+            btnCancelContactForm.Text = "Cancel";
+            btnCancelContactForm.UseVisualStyleBackColor = true;
+            btnCancelContactForm.Click += btnCancelContactForm_Click;
+            // 
             // ContactForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 691);
+            ClientSize = new Size(800, 742);
+            Controls.Add(btnCancelContactForm);
+            Controls.Add(btnOKContactForm);
             Controls.Add(grpBoxAdressContactForm);
             Controls.Add(grpBoxEmailAndPhoneContactForm);
             Controls.Add(groupBoxNameContactForm);
@@ -319,5 +343,7 @@
         private TextBox textBox3;
         private TextBox textBox4;
         private ComboBox comboBoxCountryContactList;
+        private Button btnOKContactForm;
+        private Button btnCancelContactForm;
     }
 }

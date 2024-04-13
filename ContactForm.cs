@@ -13,6 +13,10 @@ namespace Assignment5ABC
         {
             InitializeComponent();
             contact = new Contact(); // Create a new Contact instance
+            foreach (var country in Enum.GetValues(typeof(Assignment5ABC.ContactFiles.Countries)))
+            {
+                comboBoxCountryContactList.Items.Add(country.ToString().Replace("_", " "));
+            }
         }
 
         public ContactForm(Contact existingContact) : this()
@@ -55,25 +59,33 @@ namespace Assignment5ABC
 
         // Add event handlers for other form controls as necessary
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnCancelContactForm_Click(object sender, EventArgs e)
         {
+            // When the Cancel button is clicked, confirm the cancellation
             var result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
+            {
+                // If the user confirms, set the DialogResult to Cancel and close the form
+                this.DialogResult = DialogResult.Cancel;
                 this.Close();
+            }
         }
-
-        private void btnOK_Click(object sender, EventArgs e)
+        private void btnOKContactForm_Click(object sender, EventArgs e)
         {
+            // When the OK button is clicked, validate the contact data
             if (contact.CheckData())
             {
+                // If the data is valid, set the DialogResult to OK and close the form
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
+                // If the data is not valid, show an error message
                 MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 

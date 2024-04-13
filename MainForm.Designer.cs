@@ -48,7 +48,7 @@
             listBoxPartialData.Name = "listBoxPartialData";
             listBoxPartialData.Size = new Size(826, 604);
             listBoxPartialData.TabIndex = 0;
-            listBoxPartialData.SelectedIndexChanged += this.listBoxPartialData_SelectedIndexChanged;
+            listBoxPartialData.SelectedIndexChanged += listBoxPartialData_SelectedIndexChanged;
             // 
             // listBoxCompleteContact
             // 
@@ -59,7 +59,7 @@
             listBoxCompleteContact.Name = "listBoxCompleteContact";
             listBoxCompleteContact.Size = new Size(558, 604);
             listBoxCompleteContact.TabIndex = 1;
-            listBoxCompleteContact.SelectedIndexChanged += this.listBoxCompleteContact_SelectedIndexChanged;
+            listBoxCompleteContact.SelectedIndexChanged += listBoxCompleteContact_SelectedIndexChanged;
             // 
             // btnAddMainForm
             // 
@@ -104,7 +104,7 @@
             lblNameMainForm.Name = "lblNameMainForm";
             lblNameMainForm.Size = new Size(232, 25);
             lblNameMainForm.TabIndex = 6;
-            lblNameMainForm.Text = "Name (Surname, first name ";
+            lblNameMainForm.Text = "Name (Surname, first name)";
             // 
             // lblOfficePhoneMainForm
             // 
