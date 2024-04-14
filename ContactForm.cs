@@ -27,10 +27,10 @@ namespace Assignment5ABC
 
         private Contact _contact;
 
-        public Contact Contact 
-        { 
-            get { return _contact; } 
-            private set { _contact = value; } 
+        public Contact Contact
+        {
+            get { return _contact; }
+            private set { _contact = value; }
         }
 
         internal void UpdateFormFields()
@@ -55,9 +55,9 @@ namespace Assignment5ABC
             contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
             contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
             contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
-            contact.Address.Street = textBox4.Text;
-            contact.Address.ZipCode = textBox3.Text;
-            contact.Address.City = textBox1.Text;
+            contact.Address.Street = txtBoxStreet.Text;
+            contact.Address.ZipCode = txtBoxCity.Text;
+            contact.Address.City = txtBoxZipCode.Text;
             contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
 
             return contact;
@@ -125,27 +125,43 @@ namespace Assignment5ABC
             contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void txtBoxStreet_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.Street = textBox4.Text;
+            contact.Address.Street = txtBoxStreet.Text;
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void txtBoxCity_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.ZipCode = textBox3.Text;
+            contact.Address.ZipCode = txtBoxCity.Text;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void txtBoxZipCode_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.City = textBox1.Text;
+            contact.Address.City = txtBoxZipCode.Text;
         }
 
-         private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCountryContactList.SelectedItem != null)
             {
                 contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+        }
+
+        internal bool CheckData()
+        {
+            // Check if at least a first name, or a last name, city and country are provided
+            // For example:
+            return !string.IsNullOrEmpty(txtBoxFirstName.Text) || !string.IsNullOrEmpty(txtBoxLastName.Text) && !string.IsNullOrEmpty(txtBoxCity.Text) && !string.IsNullOrEmpty(comboBoxCountryContactList.Text);
         }
 
 

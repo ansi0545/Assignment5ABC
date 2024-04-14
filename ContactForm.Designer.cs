@@ -46,11 +46,11 @@
             comboBoxCountryContactList = new ComboBox();
             lblCountryContactForm = new Label();
             lblZipCodeContactForm = new Label();
-            textBox1 = new TextBox();
+            txtBoxZipCode = new TextBox();
             lblCityContactForm = new Label();
             lblStreetContactForm = new Label();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
+            txtBoxCity = new TextBox();
+            txtBoxStreet = new TextBox();
             btnOKContactForm = new Button();
             btnCancelContactForm = new Button();
             groupBoxNameContactForm.SuspendLayout();
@@ -195,11 +195,11 @@
             grpBoxAdressContactForm.Controls.Add(comboBoxCountryContactList);
             grpBoxAdressContactForm.Controls.Add(lblCountryContactForm);
             grpBoxAdressContactForm.Controls.Add(lblZipCodeContactForm);
-            grpBoxAdressContactForm.Controls.Add(textBox1);
+            grpBoxAdressContactForm.Controls.Add(txtBoxZipCode);
             grpBoxAdressContactForm.Controls.Add(lblCityContactForm);
             grpBoxAdressContactForm.Controls.Add(lblStreetContactForm);
-            grpBoxAdressContactForm.Controls.Add(textBox3);
-            grpBoxAdressContactForm.Controls.Add(textBox4);
+            grpBoxAdressContactForm.Controls.Add(txtBoxCity);
+            grpBoxAdressContactForm.Controls.Add(txtBoxStreet);
             grpBoxAdressContactForm.Location = new Point(12, 408);
             grpBoxAdressContactForm.Name = "grpBoxAdressContactForm";
             grpBoxAdressContactForm.Size = new Size(776, 236);
@@ -235,13 +235,13 @@
             lblZipCodeContactForm.TabIndex = 6;
             lblZipCodeContactForm.Text = "Zip code";
             // 
-            // textBox1
+            // txtBoxZipCode
             // 
-            textBox1.Location = new Point(366, 124);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(385, 31);
-            textBox1.TabIndex = 5;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtBoxZipCode.Location = new Point(366, 124);
+            txtBoxZipCode.Name = "txtBoxZipCode";
+            txtBoxZipCode.Size = new Size(385, 31);
+            txtBoxZipCode.TabIndex = 5;
+            txtBoxZipCode.TextChanged += txtBoxZipCode_TextChanged;
             // 
             // lblCityContactForm
             // 
@@ -261,24 +261,25 @@
             lblStreetContactForm.TabIndex = 2;
             lblStreetContactForm.Text = "Street";
             // 
-            // textBox3
+            // txtBoxCity
             // 
-            textBox3.Location = new Point(366, 77);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(385, 31);
-            textBox3.TabIndex = 1;
-            textBox3.TextChanged += textBox3_TextChanged;
+            txtBoxCity.Location = new Point(366, 77);
+            txtBoxCity.Name = "txtBoxCity";
+            txtBoxCity.Size = new Size(385, 31);
+            txtBoxCity.TabIndex = 1;
+            txtBoxCity.TextChanged += txtBoxCity_TextChanged;
             // 
-            // textBox4
+            // txtBoxStreet
             // 
-            textBox4.Location = new Point(366, 30);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(385, 31);
-            textBox4.TabIndex = 0;
-            textBox4.TextChanged += textBox4_TextChanged;
+            txtBoxStreet.Location = new Point(366, 30);
+            txtBoxStreet.Name = "txtBoxStreet";
+            txtBoxStreet.Size = new Size(385, 31);
+            txtBoxStreet.TabIndex = 0;
+            txtBoxStreet.TextChanged += txtBoxStreet_TextChanged;
             // 
             // btnOKContactForm
             // 
+            btnOKContactForm.DialogResult = DialogResult.OK;
             btnOKContactForm.Location = new Point(179, 677);
             btnOKContactForm.Name = "btnOKContactForm";
             btnOKContactForm.Size = new Size(112, 34);
@@ -289,6 +290,7 @@
             // 
             // btnCancelContactForm
             // 
+            btnCancelContactForm.DialogResult = DialogResult.Cancel;
             btnCancelContactForm.Location = new Point(470, 677);
             btnCancelContactForm.Name = "btnCancelContactForm";
             btnCancelContactForm.Size = new Size(112, 34);
@@ -337,11 +339,11 @@
         private GroupBox grpBoxAdressContactForm;
         private Label lblCountryContactForm;
         private Label lblZipCodeContactForm;
-        private TextBox textBox1;
+        private TextBox txtBoxZipCode;
         private Label lblCityContactForm;
         private Label lblStreetContactForm;
-        private TextBox textBox3;
-        private TextBox textBox4;
+        private TextBox txtBoxCity;
+        private TextBox txtBoxStreet;
         private ComboBox comboBoxCountryContactList;
         private Button btnOKContactForm;
         private Button btnCancelContactForm;
