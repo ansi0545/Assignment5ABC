@@ -25,6 +25,20 @@ namespace Assignment5ABC
             UpdateFormFields();
         }
 
+        public void ClearFields()
+        {
+            txtBoxLastName.Clear();
+            txtBoxFirstName.Clear();
+            txtBoxEmailBusinessContactForm.Clear();
+            txtBoxEmailPrivateContactForm.Clear();
+            txtBoxCellPhoneContactForm.Clear();
+            txtBoxHomePhoneContactForm.Clear();
+            txtBoxZipCode.Clear();
+            txtBoxCity.Clear();
+            txtBoxStreet.Clear();
+            comboBoxCountryContactList.SelectedIndex = -1; // Reset the combo box
+        }
+
         private Contact _contact;
 
         public Contact Contact
@@ -58,7 +72,10 @@ namespace Assignment5ABC
             contact.Address.Street = txtBoxStreet.Text;
             contact.Address.ZipCode = txtBoxCity.Text;
             contact.Address.City = txtBoxZipCode.Text;
-            contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+            if (comboBoxCountryContactList.SelectedItem != null)
+            {
+                contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+            }
 
             return contact;
         }

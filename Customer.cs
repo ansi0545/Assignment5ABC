@@ -30,7 +30,7 @@ namespace Assignment5ABC
         {
             if (ContactInfo != null)
             {
-                return string.Format("{0}                 {1}                 {2}                {3}                 {4}", ID, ContactInfo.LastName, ContactInfo.FirstName, ContactInfo.Phone.OfficePhone, ContactInfo.Email.Work);
+                return string.Format("{0,-5} {1,-10} {2,-10} {3,-15} {4,-20}", ID, ContactInfo.LastName, ContactInfo.FirstName, ContactInfo.Phone.OfficePhone, ContactInfo.Email.Work);
             }
             else
             {
@@ -38,18 +38,22 @@ namespace Assignment5ABC
             }
         }
 
-        public string ToCompleteString()
+        public string[] ToCompleteString()
         {
-           return $"ID: {ID}\n" +
-           $"Name: {ContactInfo.FirstName} {ContactInfo.LastName}\n" +
-           $"Home Phone: {ContactInfo.Phone.PrivatePhone}\n" +
-           $"Office Phone: {ContactInfo.Phone.OfficePhone}\n" +
-           $"Work Email: {ContactInfo.Email.Work}\n" +
-           $"Personal Email: {ContactInfo.Email.Personal}\n" +
-           $"Street: {ContactInfo.Address.Street}\n" +
-           $"City: {ContactInfo.Address.City}\n" +
-           $"Zip Code: {ContactInfo.Address.ZipCode}\n" +
-           $"Country: {ContactInfo.Address.Country}";
+            return new string[]
+            {
+        ID.ToString(),
+        $"{ContactInfo.FirstName} {ContactInfo.LastName}",
+        ContactInfo.Phone.PrivatePhone,
+        ContactInfo.Phone.OfficePhone,
+        ContactInfo.Email.Work,
+        ContactInfo.Email.Personal,
+        ContactInfo.Address.Street,
+        ContactInfo.Address.City,
+        ContactInfo.Address.ZipCode,
+        ContactInfo.Address.Country
+            };
         }
+
     }
 }

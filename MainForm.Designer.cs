@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             listBoxPartialData = new ListBox();
-            listBoxCompleteContact = new ListBox();
             btnAddMainForm = new Button();
             btnEditMainForm = new Button();
             btnDeleteMainForm = new Button();
@@ -38,6 +37,7 @@
             lblOfficePhoneMainForm = new Label();
             lblOfficeEmailContactForm = new Label();
             lblContactDetailsMainForm = new Label();
+            listViewCompleteContact = new ListView();
             SuspendLayout();
             // 
             // listBoxPartialData
@@ -46,20 +46,9 @@
             listBoxPartialData.ItemHeight = 25;
             listBoxPartialData.Location = new Point(2, 61);
             listBoxPartialData.Name = "listBoxPartialData";
-            listBoxPartialData.Size = new Size(826, 604);
+            listBoxPartialData.Size = new Size(756, 604);
             listBoxPartialData.TabIndex = 0;
             listBoxPartialData.SelectedIndexChanged += listBoxPartialData_SelectedIndexChanged;
-            // 
-            // listBoxCompleteContact
-            // 
-            listBoxCompleteContact.BackColor = SystemColors.Control;
-            listBoxCompleteContact.FormattingEnabled = true;
-            listBoxCompleteContact.ItemHeight = 25;
-            listBoxCompleteContact.Location = new Point(834, 61);
-            listBoxCompleteContact.Name = "listBoxCompleteContact";
-            listBoxCompleteContact.Size = new Size(558, 604);
-            listBoxCompleteContact.TabIndex = 1;
-            listBoxCompleteContact.SelectedIndexChanged += listBoxCompleteContact_SelectedIndexChanged;
             // 
             // btnAddMainForm
             // 
@@ -100,7 +89,7 @@
             // lblNameMainForm
             // 
             lblNameMainForm.AutoSize = true;
-            lblNameMainForm.Location = new Point(168, 17);
+            lblNameMainForm.Location = new Point(148, 17);
             lblNameMainForm.Name = "lblNameMainForm";
             lblNameMainForm.Size = new Size(232, 25);
             lblNameMainForm.TabIndex = 6;
@@ -109,7 +98,7 @@
             // lblOfficePhoneMainForm
             // 
             lblOfficePhoneMainForm.AutoSize = true;
-            lblOfficePhoneMainForm.Location = new Point(444, 17);
+            lblOfficePhoneMainForm.Location = new Point(435, 17);
             lblOfficePhoneMainForm.Name = "lblOfficePhoneMainForm";
             lblOfficePhoneMainForm.Size = new Size(115, 25);
             lblOfficePhoneMainForm.TabIndex = 7;
@@ -118,7 +107,7 @@
             // lblOfficeEmailContactForm
             // 
             lblOfficeEmailContactForm.AutoSize = true;
-            lblOfficeEmailContactForm.Location = new Point(652, 17);
+            lblOfficeEmailContactForm.Location = new Point(634, 17);
             lblOfficeEmailContactForm.Name = "lblOfficeEmailContactForm";
             lblOfficeEmailContactForm.Size = new Size(106, 25);
             lblOfficeEmailContactForm.TabIndex = 8;
@@ -133,11 +122,22 @@
             lblContactDetailsMainForm.TabIndex = 9;
             lblContactDetailsMainForm.Text = "Contact details";
             // 
+            // listViewCompleteContact
+            // 
+            listViewCompleteContact.AllowColumnReorder = true;
+            listViewCompleteContact.Location = new Point(764, 61);
+            listViewCompleteContact.Name = "listViewCompleteContact";
+            listViewCompleteContact.Size = new Size(823, 604);
+            listViewCompleteContact.TabIndex = 10;
+            listViewCompleteContact.UseCompatibleStateImageBehavior = false;
+            listViewCompleteContact.View = View.Details;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1451, 723);
+            Controls.Add(listViewCompleteContact);
             Controls.Add(lblContactDetailsMainForm);
             Controls.Add(lblOfficeEmailContactForm);
             Controls.Add(lblOfficePhoneMainForm);
@@ -146,7 +146,6 @@
             Controls.Add(btnDeleteMainForm);
             Controls.Add(btnEditMainForm);
             Controls.Add(btnAddMainForm);
-            Controls.Add(listBoxCompleteContact);
             Controls.Add(listBoxPartialData);
             Name = "MainForm";
             Text = "Customer registry by Ann-Sofie";
@@ -157,7 +156,6 @@
         #endregion
 
         private ListBox listBoxPartialData;
-        private ListBox listBoxCompleteContact;
         private Button btnAddMainForm;
         private Button btnEditMainForm;
         private Button btnDeleteMainForm;
@@ -166,5 +164,6 @@
         private Label lblOfficePhoneMainForm;
         private Label lblOfficeEmailContactForm;
         private Label lblContactDetailsMainForm;
+        private ListView listViewCompleteContact;
     }
 }
