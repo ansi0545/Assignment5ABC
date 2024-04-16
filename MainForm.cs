@@ -41,13 +41,15 @@ namespace Assignment5ABC
 
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {
-            contactForm.ClearFields();
-            if (contactForm.ShowDialog() == DialogResult.OK)
+            using (ContactForm contactForm = new ContactForm())
             {
-                Customer newCustomer = new Customer(contactForm.GetContact());
-                customerManager.AddCustomer(newCustomer);
-                listBoxPartialData.Items.Add(newCustomer.ToString());
-                listViewCompleteContact.Items.Add(new ListViewItem(newCustomer.ToCompleteString()));
+                if (contactForm.ShowDialog() == DialogResult.OK)
+                {
+                    Customer newCustomer = new Customer(contactForm.GetContact());
+                    customerManager.AddCustomer(newCustomer);
+                    listBoxPartialData.Items.Add(newCustomer.ToString());
+                    listViewCompleteContact.Items.Add(new ListViewItem(newCustomer.ToCompleteString()));
+                }
             }
         }
 
@@ -56,13 +58,15 @@ namespace Assignment5ABC
             int selectedIndex = GetSelectedIndex();
             if (selectedIndex >= 0)
             {
-                contactForm.SetContact(customerManager.Customers[selectedIndex].ContactInfo);
-                if (contactForm.ShowDialog() == DialogResult.OK)
+                using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo))
                 {
-                    Customer updatedCustomer = customerManager.Customers[selectedIndex];
-                    updatedCustomer.ContactInfo = contactForm.GetContact();
-                    customerManager.ChangeCustomerData(selectedIndex, updatedCustomer);
-                    UpdateListControls();
+                    if (contactForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Customer updatedCustomer = customerManager.Customers[selectedIndex];
+                        updatedCustomer.ContactInfo = contactForm.GetContact();
+                        customerManager.ChangeCustomerData(selectedIndex, updatedCustomer);
+                        UpdateListControls();
+                    }
                 }
             }
             else

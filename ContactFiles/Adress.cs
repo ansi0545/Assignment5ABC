@@ -14,7 +14,13 @@ namespace Assignment5ABC.ContactFiles
         public string Country { get => country; set => country = value; }
 
         // Constructors
-        public Address() { }
+        public Address() : this("Default Street", "Default ZipCode", "Default City", "Default Country") { }
+
+        public Address(string street) : this(street, "Default ZipCode", "Default City", "Default Country") { }
+
+        public Address(string street, string zipCode) : this(street, zipCode, "Default City", "Default Country") { }
+
+        public Address(string street, string zipCode, string city) : this(street, zipCode, city, "Default Country") { }
 
         public Address(string street, string zipCode, string city, string country)
         {
