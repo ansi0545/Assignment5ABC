@@ -17,6 +17,9 @@ namespace Assignment5ABC
             {
                 comboBoxCountryContactList.Items.Add(country.ToString().Replace("_", " "));
             }
+
+            // Subscribe to the FormClosing event
+            this.FormClosing += ContactForm_FormClosing;
         }
 
         public ContactForm(Contact existingContact) : this()
@@ -82,6 +85,40 @@ namespace Assignment5ABC
 
         // Add event handlers for other form controls as necessary
 
+        
+
+        private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Check if the form is closing due to OK button click
+            if (this.DialogResult == DialogResult.OK)
+            {
+                // Validate the contact data
+                if (!CheckData())
+                {
+                    // If the data is not valid, cancel the closing event
+                    e.Cancel = true;
+                    // Show an error message
+                    MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnOKContactForm_Click(object sender, EventArgs e)
+        {
+            // When the OK button is clicked, validate the contact data
+            if (CheckData())
+            {
+                // If the data is valid, set the DialogResult to OK and close the form
+                this.DialogResult = DialogResult.OK;
+
+            }
+            else
+            {
+                // If the data is not valid, show an error message
+                MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnCancelContactForm_Click(object sender, EventArgs e)
         {
             // When the Cancel button is clicked, confirm the cancellation
@@ -91,21 +128,6 @@ namespace Assignment5ABC
                 // If the user confirms, set the DialogResult to Cancel and close the form
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
-            }
-        }
-        private void btnOKContactForm_Click(object sender, EventArgs e)
-        {
-            // When the OK button is clicked, validate the contact data
-            if (contact.CheckData())
-            {
-                // If the data is valid, set the DialogResult to OK and close the form
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            else
-            {
-                // If the data is not valid, show an error message
-                MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -176,11 +198,12 @@ namespace Assignment5ABC
 
         internal bool CheckData()
         {
-            // Check if at least a first name, or a last name, city and country are provided
-            // For example:
-            return !string.IsNullOrEmpty(txtBoxFirstName.Text) || !string.IsNullOrEmpty(txtBoxLastName.Text) && !string.IsNullOrEmpty(txtBoxCity.Text) && !string.IsNullOrEmpty(comboBoxCountryContactList.Text);
+            // Check if all fields (first name, last name, city, and country) are provided
+            return !string.IsNullOrEmpty(txtBoxFirstName.Text) &&
+                   !string.IsNullOrEmpty(txtBoxLastName.Text) &&
+                   !string.IsNullOrEmpty(txtBoxCity.Text) &&
+                   !string.IsNullOrEmpty(comboBoxCountryContactList.Text);
         }
-
 
     }
 }

@@ -28,10 +28,10 @@ namespace Assignment5ABC.ContactFiles
         }
 
         // Method to perform validation
-        public bool CheckData()
-        {
-            return !string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName) ||
-                   !string.IsNullOrEmpty(Address.City) || !string.IsNullOrEmpty(Address.Country);
-        }
+        // public bool CheckData()
+        // {
+        //     return !string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName) ||
+        //            !string.IsNullOrEmpty(Address.City) || !string.IsNullOrEmpty(Address.Country);
+        // }
     }
 }
