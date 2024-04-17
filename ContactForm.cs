@@ -1,27 +1,42 @@
-﻿
-using Assignment5ABC.ContactFiles;
+﻿using Assignment5ABC.ContactFiles;
+using System.Text.RegularExpressions;
 
 namespace Assignment5ABC
 {
     internal partial class ContactForm : Form
     {
-        private Contact contact;
+        public Contact Contact { get; private set; }
+        public bool IsEmailInvalid { get; private set; }
 
         public ContactForm()
         {
             InitializeComponent();
-            contact = new Contact(); // Create a new Contact instance
+            Contact = new Contact(); // Create a new Contact instance
             InitializeCountries();
 
             // Subscribe to the FormClosing event
             this.FormClosing += ContactForm_FormClosing;
+
+            // Subscribe to the TextChanged event for each TextBox
+            txtBoxFirstName.TextChanged += txtBoxFirstName_TextChanged;
+            txtBoxLastName.TextChanged += txtBoxLastName_TextChanged;
+            txtBoxHomePhoneContactForm.TextChanged += txtBoxHomePhoneContactForm_TextChanged;
+            txtBoxCellPhoneContactForm.TextChanged += txtBoxCellPhoneContactForm_TextChanged;
+            txtBoxEmailBusinessContactForm.TextChanged += txtBoxEmailBusinessContactForm_TextChanged;
+            txtBoxEmailPrivateContactForm.TextChanged += txtBoxEmailPrivateContactForm_TextChanged;
+            txtBoxStreet.TextChanged += txtBoxStreet_TextChanged;
+            txtBoxCity.TextChanged += txtBoxCity_TextChanged;
+            txtBoxZipCode.TextChanged += txtBoxZipCode_TextChanged;
+
+            // Subscribe to the SelectedIndexChanged event for the ComboBox
+            comboBoxCountryContactList.SelectedIndexChanged += comboBoxCountryContactList_SelectedIndexChanged;
         }
 
         public ContactForm(Contact existingContact) : this()
         {
             if (existingContact != null)
             {
-                contact = existingContact; // Use existing contact when editing
+                Contact = existingContact; // Use existing contact when editing
                 UpdateFormFields();
             }
         }
@@ -53,74 +68,52 @@ namespace Assignment5ABC
             comboBoxCountryContactList.SelectedIndex = -1; // Reset the combo box
         }
 
-        private Contact _contact;
-
-        public Contact Contact
-        {
-            get { return _contact; }
-            private set { _contact = value; }
-        }
-
         internal void UpdateFormFields()
         {
-            txtBoxFirstName.Text = contact.FirstName;
-            txtBoxLastName.Text = contact.LastName;
-            txtBoxEmailBusinessContactForm.Text = contact.Email.Work;
-            txtBoxEmailPrivateContactForm.Text = contact.Email.Personal;
-            txtBoxCellPhoneContactForm.Text = contact.Phone.OfficePhone;
-            txtBoxHomePhoneContactForm.Text = contact.Phone.PrivatePhone;
-            txtBoxZipCode.Text = contact.Address.ZipCode;
-            txtBoxCity.Text = contact.Address.City;
-            txtBoxStreet.Text = contact.Address.Street;
+            txtBoxFirstName.Text = Contact.FirstName;
+            txtBoxLastName.Text = Contact.LastName;
+            txtBoxEmailBusinessContactForm.Text = Contact.Email.Work;
+            txtBoxEmailPrivateContactForm.Text = Contact.Email.Personal;
+            txtBoxCellPhoneContactForm.Text = Contact.Phone.OfficePhone;
+            txtBoxHomePhoneContactForm.Text = Contact.Phone.PrivatePhone;
+            txtBoxZipCode.Text = Contact.Address.ZipCode;
+            txtBoxCity.Text = Contact.Address.City;
+            txtBoxStreet.Text = Contact.Address.Street;
 
             // Find the index of the country in the ComboBox items
-            int countryIndex = comboBoxCountryContactList.Items.IndexOf(contact.Address.Country.Replace("_", " "));
+            int countryIndex = comboBoxCountryContactList.Items.IndexOf(Contact.Address.Country.Replace("_", " "));
             // Set the SelectedIndex property
             comboBoxCountryContactList.SelectedIndex = countryIndex;
-        }
-
-        internal void SetContact(Contact existingContact)
-        {
-            contact = existingContact; // Set the Contact object
-            UpdateFormFields();
         }
 
         internal Contact GetContact()
         {
             // Update the contact information from the form fields
-            contact.FirstName = txtBoxFirstName.Text;
-            contact.LastName = txtBoxLastName.Text;
-            contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
-            contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
-            contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
-            contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
-            contact.Address.Street = txtBoxStreet.Text;
-            contact.Address.City = txtBoxCity.Text;
-            contact.Address.ZipCode = txtBoxZipCode.Text;
+            Contact.FirstName = txtBoxFirstName.Text;
+            Contact.LastName = txtBoxLastName.Text;
+            Contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
+            Contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
+            Contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
+            Contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
+            Contact.Address.Street = txtBoxStreet.Text;
+            Contact.Address.City = txtBoxCity.Text;
+            Contact.Address.ZipCode = txtBoxZipCode.Text;
             if (comboBoxCountryContactList.SelectedItem != null)
             {
-                contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+                Contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
             }
 
-            return contact;
+            return Contact;
         }
-
-
-
-
 
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             if (this.DialogResult == DialogResult.OK)
             {
-
-                if (!CheckData())
+                if (!ValidateAndShowErrors())
                 {
                     // If the data is not valid, cancel the closing event
                     e.Cancel = true;
-                    // Show an error message
-                    MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -128,16 +121,10 @@ namespace Assignment5ABC
         private void btnOKContactForm_Click(object sender, EventArgs e)
         {
             // When the OK button is clicked, validate the contact data
-            if (CheckData())
+            if (ValidateAndShowErrors())
             {
                 // If the data is valid, set the DialogResult to OK and close the form
                 this.DialogResult = DialogResult.OK;
-
-            }
-            else
-            {
-                // If the data is not valid, show an error message
-                MessageBox.Show("Please fill in all required fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -153,80 +140,91 @@ namespace Assignment5ABC
             }
         }
 
+        internal bool CheckData()
+        {
+            // Check if all fields (first name, last name, city, and country) are provided
+            var emailRegex = new Regex(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$");
+            bool isEmailValid = emailRegex.IsMatch(txtBoxEmailBusinessContactForm.Text) &&
+                                emailRegex.IsMatch(txtBoxEmailPrivateContactForm.Text);
 
+            IsEmailInvalid = !isEmailValid;
 
+            return !string.IsNullOrEmpty(txtBoxFirstName.Text) &&
+                   !string.IsNullOrEmpty(txtBoxLastName.Text) &&
+                   !string.IsNullOrEmpty(txtBoxCity.Text) &&
+                   !string.IsNullOrEmpty(comboBoxCountryContactList.Text) &&
+                   isEmailValid;
+        }
+
+        private bool ValidateAndShowErrors()
+        {
+            if (!CheckData())
+            {
+                // Show an error message
+                string errorMessage = IsEmailInvalid ? "Invalid email format." : Constants.ErrorMessage;
+                MessageBox.Show(errorMessage, Constants.ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
 
         private void txtBoxFirstName_TextChanged(object sender, EventArgs e)
         {
-            contact.FirstName = txtBoxFirstName.Text;
+            Contact.FirstName = txtBoxFirstName.Text;
         }
 
         private void txtBoxLastName_TextChanged(object sender, EventArgs e)
         {
-            contact.LastName = txtBoxLastName.Text;
+            Contact.LastName = txtBoxLastName.Text;
         }
 
         private void txtBoxHomePhoneContactForm_TextChanged(object sender, EventArgs e)
         {
-            contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
+            Contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
         }
 
         private void txtBoxCellPhoneContactForm_TextChanged(object sender, EventArgs e)
         {
-            contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
+            Contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
         }
 
         private void txtBoxEmailBusinessContactForm_TextChanged(object sender, EventArgs e)
         {
-            contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
+            Contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
         }
 
         private void txtBoxEmailPrivateContactForm_TextChanged(object sender, EventArgs e)
         {
-            contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
+            Contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
         }
 
         private void txtBoxStreet_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.Street = txtBoxStreet.Text;
+            Contact.Address.Street = txtBoxStreet.Text;
         }
 
         private void txtBoxCity_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.City = txtBoxCity.Text;
+            Contact.Address.City = txtBoxCity.Text;
         }
 
         private void txtBoxZipCode_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.ZipCode = txtBoxZipCode.Text;
+            Contact.Address.ZipCode = txtBoxZipCode.Text;
         }
 
         private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCountryContactList.SelectedItem != null)
             {
-                contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
+                Contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
             }
         }
+    }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                this.DialogResult = DialogResult.Cancel;
-            }
-        }
-
-        internal bool CheckData()
-        {
-            // Check if all fields (first name, last name, city, and country) are provided
-            return !string.IsNullOrEmpty(txtBoxFirstName.Text) &&
-                   !string.IsNullOrEmpty(txtBoxLastName.Text) &&
-                   !string.IsNullOrEmpty(txtBoxCity.Text) &&
-                   !string.IsNullOrEmpty(comboBoxCountryContactList.Text);
-        }
-
+    public static class Constants
+    {
+        public const string ErrorTitle = "Error";
+        public const string ErrorMessage = "Please fill in all required fields.";
     }
 }
-
