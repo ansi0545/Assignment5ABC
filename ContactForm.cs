@@ -61,7 +61,11 @@ namespace Assignment5ABC
             txtBoxZipCode.Text = contact.Address.ZipCode;
             txtBoxCity.Text = contact.Address.City;
             txtBoxStreet.Text = contact.Address.Street;
-            comboBoxCountryContactList.SelectedItem = contact.Address.Country.Replace(" ", "_");
+            
+            // Find the index of the country in the ComboBox items
+            int countryIndex = comboBoxCountryContactList.Items.IndexOf(contact.Address.Country.Replace("_", " "));
+            // Set the SelectedIndex property
+            comboBoxCountryContactList.SelectedIndex = countryIndex;
         }
 
         internal void SetContact(Contact existingContact)

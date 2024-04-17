@@ -1,3 +1,7 @@
+using System;
+using System.Windows.Forms;
+using Assignment5ABC.ContactFiles;
+
 namespace Assignment5ABC
 {
     public partial class MainForm : Form
@@ -49,6 +53,7 @@ namespace Assignment5ABC
                     customerManager.AddCustomer(newCustomer);
                     listBoxPartialData.Items.Add(newCustomer.ToString());
                     listViewCompleteContact.Items.Add(new ListViewItem(newCustomer.ToCompleteString()));
+                    ResizeListViewColumns(listViewCompleteContact);
                 }
             }
         }
@@ -116,14 +121,16 @@ namespace Assignment5ABC
             ResizeListViewColumns(listViewCompleteContact);
         }
 
-
-
         private void ResizeListViewColumns(ListView listView)
         {
             // Auto resize each column
             foreach (ColumnHeader column in listView.Columns)
             {
-                column.Width = -1;
+                listView.AutoResizeColumn(column.Index, ColumnHeaderAutoResizeStyle.HeaderSize);
+                int width1 = column.Width;
+                listView.AutoResizeColumn(column.Index, ColumnHeaderAutoResizeStyle.ColumnContent);
+                int width2 = column.Width;
+                column.Width = Math.Max(width1, width2);
             }
         }
 
