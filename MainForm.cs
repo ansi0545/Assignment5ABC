@@ -45,7 +45,7 @@ namespace Assignment5ABC
 
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {
-            using (ContactForm contactForm = new ContactForm())
+            using (ContactForm contactForm = new ContactForm(null, "Add new customer"))
             {
                 if (contactForm.ShowDialog() == DialogResult.OK)
                 {
@@ -62,7 +62,7 @@ namespace Assignment5ABC
             int selectedIndex = listBoxPartialData.SelectedIndex;
             if (selectedIndex >= 0)
             {
-                using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo))
+                using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo, "Edit customer"))
                 {
                     if (contactForm.ShowDialog() == DialogResult.OK)
                     {

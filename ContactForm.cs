@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿
 using Assignment5ABC.ContactFiles;
 
 namespace Assignment5ABC
@@ -13,10 +11,7 @@ namespace Assignment5ABC
         {
             InitializeComponent();
             contact = new Contact(); // Create a new Contact instance
-            foreach (var country in Enum.GetValues(typeof(Assignment5ABC.ContactFiles.Countries)))
-            {
-                comboBoxCountryContactList.Items.Add(country.ToString().Replace("_", " "));
-            }
+            InitializeCountries();
 
             // Subscribe to the FormClosing event
             this.FormClosing += ContactForm_FormClosing;
@@ -24,8 +19,24 @@ namespace Assignment5ABC
 
         public ContactForm(Contact existingContact) : this()
         {
-            contact = existingContact; // Use existing contact when editing
-            UpdateFormFields();
+            if (existingContact != null)
+            {
+                contact = existingContact; // Use existing contact when editing
+                UpdateFormFields();
+            }
+        }
+
+        public ContactForm(Contact existingContact, string title) : this(existingContact)
+        {
+            this.Text = title; // Set the form title
+        }
+
+        private void InitializeCountries()
+        {
+            foreach (var country in Enum.GetValues(typeof(Assignment5ABC.ContactFiles.Countries)))
+            {
+                comboBoxCountryContactList.Items.Add(country.ToString().Replace("_", " "));
+            }
         }
 
         public void ClearFields()
@@ -61,7 +72,7 @@ namespace Assignment5ABC
             txtBoxZipCode.Text = contact.Address.ZipCode;
             txtBoxCity.Text = contact.Address.City;
             txtBoxStreet.Text = contact.Address.Street;
-            
+
             // Find the index of the country in the ComboBox items
             int countryIndex = comboBoxCountryContactList.Items.IndexOf(contact.Address.Country.Replace("_", " "));
             // Set the SelectedIndex property
@@ -94,16 +105,16 @@ namespace Assignment5ABC
             return contact;
         }
 
-       
+
 
 
 
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
             if (this.DialogResult == DialogResult.OK)
             {
-               
+
                 if (!CheckData())
                 {
                     // If the data is not valid, cancel the closing event
