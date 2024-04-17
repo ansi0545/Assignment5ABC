@@ -54,7 +54,14 @@ namespace Assignment5ABC
         {
             txtBoxFirstName.Text = contact.FirstName;
             txtBoxLastName.Text = contact.LastName;
-            // Update other form fields similarly
+            txtBoxEmailBusinessContactForm.Text = contact.Email.Work;
+            txtBoxEmailPrivateContactForm.Text = contact.Email.Personal;
+            txtBoxCellPhoneContactForm.Text = contact.Phone.OfficePhone;
+            txtBoxHomePhoneContactForm.Text = contact.Phone.PrivatePhone;
+            txtBoxZipCode.Text = contact.Address.ZipCode;
+            txtBoxCity.Text = contact.Address.City;
+            txtBoxStreet.Text = contact.Address.Street;
+            comboBoxCountryContactList.SelectedItem = contact.Address.Country.Replace(" ", "_");
         }
 
         internal void SetContact(Contact existingContact)
@@ -73,8 +80,8 @@ namespace Assignment5ABC
             contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
             contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
             contact.Address.Street = txtBoxStreet.Text;
-            contact.Address.ZipCode = txtBoxCity.Text;
-            contact.Address.City = txtBoxZipCode.Text;
+            contact.Address.City = txtBoxCity.Text;
+            contact.Address.ZipCode = txtBoxZipCode.Text;
             if (comboBoxCountryContactList.SelectedItem != null)
             {
                 contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
@@ -85,7 +92,7 @@ namespace Assignment5ABC
 
         // Add event handlers for other form controls as necessary
 
-        
+
 
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -171,12 +178,12 @@ namespace Assignment5ABC
 
         private void txtBoxCity_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.ZipCode = txtBoxCity.Text;
+            contact.Address.City = txtBoxCity.Text;
         }
 
         private void txtBoxZipCode_TextChanged(object sender, EventArgs e)
         {
-            contact.Address.City = txtBoxZipCode.Text;
+            contact.Address.ZipCode = txtBoxZipCode.Text;
         }
 
         private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)

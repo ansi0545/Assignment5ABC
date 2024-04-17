@@ -46,7 +46,7 @@
             listBoxPartialData.ItemHeight = 25;
             listBoxPartialData.Location = new Point(2, 61);
             listBoxPartialData.Name = "listBoxPartialData";
-            listBoxPartialData.Size = new Size(756, 604);
+            listBoxPartialData.Size = new Size(801, 604);
             listBoxPartialData.TabIndex = 0;
             listBoxPartialData.SelectedIndexChanged += listBoxPartialData_SelectedIndexChanged;
             // 
@@ -125,7 +125,7 @@
             // listViewCompleteContact
             // 
             listViewCompleteContact.AllowColumnReorder = true;
-            listViewCompleteContact.Location = new Point(764, 61);
+            listViewCompleteContact.Location = new Point(809, 61);
             listViewCompleteContact.Name = "listViewCompleteContact";
             listViewCompleteContact.Size = new Size(823, 604);
             listViewCompleteContact.TabIndex = 10;
