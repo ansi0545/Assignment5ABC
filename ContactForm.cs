@@ -94,16 +94,16 @@ namespace Assignment5ABC
             return contact;
         }
 
-        // Add event handlers for other form controls as necessary
+       
 
 
 
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Check if the form is closing due to OK button click
+            
             if (this.DialogResult == DialogResult.OK)
             {
-                // Validate the contact data
+               
                 if (!CheckData())
                 {
                     // If the data is not valid, cancel the closing event
