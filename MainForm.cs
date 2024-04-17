@@ -52,7 +52,6 @@ namespace Assignment5ABC
                     Customer newCustomer = new Customer(contactForm.GetContact());
                     customerManager.AddCustomer(newCustomer);
                     listBoxPartialData.Items.Add(newCustomer.ToString());
-                    listViewCompleteContact.Items.Add(new ListViewItem(newCustomer.ToCompleteString()));
                     ResizeListViewColumns(listViewCompleteContact);
                 }
             }
@@ -60,7 +59,7 @@ namespace Assignment5ABC
 
         private void btnEditMainForm_Click(object sender, EventArgs e)
         {
-            int selectedIndex = GetSelectedIndex();
+            int selectedIndex = listBoxPartialData.SelectedIndex;
             if (selectedIndex >= 0)
             {
                 using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo))
@@ -82,7 +81,7 @@ namespace Assignment5ABC
 
         private void btnDeleteMainForm_Click(object sender, EventArgs e)
         {
-            int selectedIndex = GetSelectedIndex();
+            int selectedIndex = listBoxPartialData.SelectedIndex;
             if (selectedIndex >= 0)
             {
                 customerManager.RemoveCustomer(selectedIndex);
@@ -111,10 +110,10 @@ namespace Assignment5ABC
                 listBoxPartialData.Items.Add(customer.ToString());
 
                 // Create a ListViewItem for the customer using ToCompleteString method
-                ListViewItem item = new ListViewItem(customer.ToCompleteString());
+                //ListViewItem item = new ListViewItem(customer.ToCompleteString());
 
                 // Add the ListViewItem to the ListView
-                listViewCompleteContact.Items.Add(item);
+                //listViewCompleteContact.Items.Add(item);
             }
 
             // Resize columns to fit content
@@ -147,10 +146,22 @@ namespace Assignment5ABC
         private void listBoxPartialData_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedIndex = listBoxPartialData.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < listViewCompleteContact.Items.Count)
+            if (selectedIndex >= 0 && selectedIndex < customerManager.Customers.Count)
             {
-                listViewCompleteContact.SelectedIndices.Clear();
-                listViewCompleteContact.SelectedIndices.Add(selectedIndex);
+                // Clear existing items in listViewCompleteContact
+                listViewCompleteContact.Items.Clear();
+
+                // Get the selected customer
+                Customer selectedCustomer = customerManager.Customers[selectedIndex];
+
+                // Create a ListViewItem for the selected customer using ToCompleteString method
+                ListViewItem item = new ListViewItem(selectedCustomer.ToCompleteString());
+
+                // Add the ListViewItem to the ListView
+                listViewCompleteContact.Items.Add(item);
+
+                // Resize columns to fit content
+                ResizeListViewColumns(listViewCompleteContact);
             }
         }
     }
