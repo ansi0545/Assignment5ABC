@@ -15,23 +15,7 @@ namespace Assignment5ABC
             customerManager = new CustomerManager();
             contactForm = new ContactForm();
             SubscribeToEvents();
-
-            listViewCompleteContact.View = View.Details;
-            listViewCompleteContact.Columns.Add("ID", 50);
-            listViewCompleteContact.Columns.Add("Name", 150);
-            listViewCompleteContact.Columns.Add("Home Phone", 100);
-            listViewCompleteContact.Columns.Add("Office Phone", 100);
-            listViewCompleteContact.Columns.Add("Work Email", 150);
-            listViewCompleteContact.Columns.Add("Personal Email", 150);
-            listViewCompleteContact.Columns.Add("Street", 150);
-            listViewCompleteContact.Columns.Add("City", 100);
-            listViewCompleteContact.Columns.Add("Zip Code", 80);
-            listViewCompleteContact.Columns.Add("Country", 100);
-
-            foreach (ColumnHeader column in listViewCompleteContact.Columns)
-            {
-                column.Width = -1;
-            }
+            InitializeListView();
         }
 
         private void SubscribeToEvents()
@@ -43,16 +27,38 @@ namespace Assignment5ABC
             listBoxPartialData.SelectedIndexChanged += listBoxPartialData_SelectedIndexChanged;
         }
 
+        private void InitializeListView()
+        {
+            // Set the view to show details.
+            listViewCompleteContact.View = View.Details;
+
+            // Add columns
+            listViewCompleteContact.Columns.Add("ID", 50);
+            listViewCompleteContact.Columns.Add("Name", 150);
+            listViewCompleteContact.Columns.Add("Home Phone", 100);
+            listViewCompleteContact.Columns.Add("Office Phone", 100);
+            listViewCompleteContact.Columns.Add("Work Email", 150);
+            listViewCompleteContact.Columns.Add("Personal Email", 150);
+            listViewCompleteContact.Columns.Add("Street", 150);
+            listViewCompleteContact.Columns.Add("City", 100);
+            listViewCompleteContact.Columns.Add("Zip Code", 80);
+            listViewCompleteContact.Columns.Add("Country", 100);
+
+            // Auto resize each column
+            foreach (ColumnHeader column in listViewCompleteContact.Columns)
+            {
+                column.Width = -1;
+            }
+        }
+
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {
             using (ContactForm contactForm = new ContactForm(null, "Add new customer"))
             {
                 if (contactForm.ShowDialog() == DialogResult.OK)
                 {
-                    Customer newCustomer = new Customer(contactForm.GetContact());
-                    customerManager.AddCustomer(newCustomer);
-                    listBoxPartialData.Items.Add(newCustomer.ToString());
-                    ResizeListViewColumns(listViewCompleteContact);
+                    customerManager.AddCustomer(contactForm.GetContact());
+                    UpdateListControls();
                 }
             }
         }

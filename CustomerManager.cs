@@ -1,4 +1,5 @@
 ﻿// CustomerManager.cs
+using Assignment5ABC.ContactFiles;
 using System.Collections.Generic;
 
 namespace Assignment5ABC
@@ -17,6 +18,12 @@ namespace Assignment5ABC
         public void AddCustomer(Customer customer)
         {
             customers.Add(customer);
+        }
+
+        public void AddCustomer(Contact contact)
+        {
+            Customer newCustomer = new Customer(contact);
+            customers.Add(newCustomer);
         }
 
         public void RemoveCustomer(int index)
