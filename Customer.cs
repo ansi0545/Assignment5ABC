@@ -21,7 +21,12 @@ namespace Assignment5ABC
         }
         public Customer(Contact contactInfo)
         {
-            id = nextId++; // Assign ID and increment for the next customer
+            if (contactInfo == null)
+            {
+                throw new ArgumentNullException(nameof(contactInfo));
+            }
+
+            id = nextId++;
             ContactInfo = contactInfo;
         }
 
@@ -30,7 +35,7 @@ namespace Assignment5ABC
         {
             if (ContactInfo != null)
             {
-                return string.Format("{0,5} {1,25} {2,25} {3,25} {4,30}", ID, ContactInfo.LastName, ContactInfo.FirstName, ContactInfo.Phone.OfficePhone, ContactInfo.Email.Work);
+                return $"{ID,5} {ContactInfo.LastName,25} {ContactInfo.FirstName,25} {ContactInfo.Phone.OfficePhone,25} {ContactInfo.Email.Work,30}";
             }
             else
             {
@@ -40,6 +45,11 @@ namespace Assignment5ABC
 
         public string[] ToCompleteString()
         {
+            if (ContactInfo == null)
+            {
+                throw new InvalidOperationException("ContactInfo is null.");
+            }
+
             return new string[]
             {
         ID.ToString(),
@@ -54,6 +64,5 @@ namespace Assignment5ABC
         ContactInfo.Address.Country
             };
         }
-
     }
 }

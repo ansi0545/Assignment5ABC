@@ -6,7 +6,6 @@ namespace Assignment5ABC
     internal partial class ContactForm : Form
     {
         public Contact Contact { get; private set; }
-        public bool IsEmailInvalid { get; private set; }
 
         public ContactForm()
         {
@@ -36,7 +35,7 @@ namespace Assignment5ABC
         {
             if (existingContact != null)
             {
-                Contact = existingContact; 
+                Contact = existingContact;
                 UpdateFormFields();
             }
         }
@@ -122,12 +121,15 @@ namespace Assignment5ABC
 
         internal bool CheckData()
         {
-            // Check if all fields (first name, last name, city, and country) are provided
+
             var emailRegex = new Regex(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$");
             bool isEmailValid = emailRegex.IsMatch(txtBoxEmailBusinessContactForm.Text) &&
                                 emailRegex.IsMatch(txtBoxEmailPrivateContactForm.Text);
 
-            IsEmailInvalid = !isEmailValid;
+            if (!isEmailValid)
+            {
+                throw new ArgumentException("Invalid email format.");
+            }
 
             return !string.IsNullOrEmpty(txtBoxFirstName.Text) &&
                    !string.IsNullOrEmpty(txtBoxLastName.Text) &&
@@ -138,14 +140,16 @@ namespace Assignment5ABC
 
         private bool ValidateAndShowErrors()
         {
-            if (!CheckData())
+            try
             {
-                // Show an error message
-                string errorMessage = IsEmailInvalid ? "Missing email or invalid email format." : Constants.ErrorMessage;
-                MessageBox.Show(errorMessage, Constants.ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CheckData();
+                return true;
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, Constants.ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            return true;
         }
 
         private void txtBoxFirstName_TextChanged(object sender, EventArgs e)
