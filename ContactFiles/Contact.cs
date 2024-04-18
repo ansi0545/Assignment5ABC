@@ -26,12 +26,5 @@ namespace Assignment5ABC.ContactFiles
         {
             return $"First Name: {FirstName}, Last Name: {LastName}, Home Phone: {Phone.PrivatePhone}, Office Phone: {Phone.OfficePhone}, Email (Work): {Email.Work}, Email (Personal): {Email.Personal}, Street: {Address.Street}, City: {Address.City}, Zip Code: {Address.ZipCode}, Country: {Address.Country}";
         }
-
-        // Method to perform validation
-        // public bool CheckData()
-        // {
-        //     return !string.IsNullOrEmpty(FirstName) || !string.IsNullOrEmpty(LastName) ||
-        //            !string.IsNullOrEmpty(Address.City) || !string.IsNullOrEmpty(Address.Country);
-        // }
     }
 }

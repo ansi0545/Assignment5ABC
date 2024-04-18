@@ -36,7 +36,7 @@ namespace Assignment5ABC
         {
             if (existingContact != null)
             {
-                Contact = existingContact; // Use existing contact when editing
+                Contact = existingContact; 
                 UpdateFormFields();
             }
         }
@@ -84,26 +84,6 @@ namespace Assignment5ABC
             int countryIndex = comboBoxCountryContactList.Items.IndexOf(Contact.Address.Country.Replace("_", " "));
             // Set the SelectedIndex property
             comboBoxCountryContactList.SelectedIndex = countryIndex;
-        }
-
-        internal Contact GetContact()
-        {
-            // Update the contact information from the form fields
-            Contact.FirstName = txtBoxFirstName.Text;
-            Contact.LastName = txtBoxLastName.Text;
-            Contact.Phone.PrivatePhone = txtBoxHomePhoneContactForm.Text;
-            Contact.Phone.OfficePhone = txtBoxCellPhoneContactForm.Text;
-            Contact.Email.Work = txtBoxEmailBusinessContactForm.Text;
-            Contact.Email.Personal = txtBoxEmailPrivateContactForm.Text;
-            Contact.Address.Street = txtBoxStreet.Text;
-            Contact.Address.City = txtBoxCity.Text;
-            Contact.Address.ZipCode = txtBoxZipCode.Text;
-            if (comboBoxCountryContactList.SelectedItem != null)
-            {
-                Contact.Address.Country = comboBoxCountryContactList.SelectedItem.ToString().Replace("_", " ");
-            }
-
-            return Contact;
         }
 
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -161,7 +141,7 @@ namespace Assignment5ABC
             if (!CheckData())
             {
                 // Show an error message
-                string errorMessage = IsEmailInvalid ? "Invalid email format." : Constants.ErrorMessage;
+                string errorMessage = IsEmailInvalid ? "Missing email or invalid email format." : Constants.ErrorMessage;
                 MessageBox.Show(errorMessage, Constants.ErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }

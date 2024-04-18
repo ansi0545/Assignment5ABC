@@ -57,7 +57,7 @@ namespace Assignment5ABC
             {
                 if (contactForm.ShowDialog() == DialogResult.OK)
                 {
-                    customerManager.AddCustomer(contactForm.GetContact());
+                    customerManager.AddCustomer(contactForm.Contact);
                     UpdateListControls();
                 }
             }
@@ -73,7 +73,7 @@ namespace Assignment5ABC
                     if (contactForm.ShowDialog() == DialogResult.OK)
                     {
                         Customer updatedCustomer = customerManager.Customers[selectedIndex];
-                        updatedCustomer.ContactInfo = contactForm.GetContact();
+                        updatedCustomer.ContactInfo = contactForm.Contact;
                         customerManager.ChangeCustomerData(selectedIndex, updatedCustomer);
                         UpdateListControls();
                     }
