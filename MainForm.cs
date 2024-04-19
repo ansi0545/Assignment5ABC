@@ -29,10 +29,8 @@ namespace Assignment5ABC
 
         private void InitializeListView()
         {
-            // Set the view to show details.
+            
             listViewCompleteContact.View = View.Details;
-
-            // Add columns
             listViewCompleteContact.Columns.Add("ID", 50);
             listViewCompleteContact.Columns.Add("Name", 150);
             listViewCompleteContact.Columns.Add("Home Phone", 100);
@@ -44,12 +42,13 @@ namespace Assignment5ABC
             listViewCompleteContact.Columns.Add("Zip Code", 80);
             listViewCompleteContact.Columns.Add("Country", 100);
 
-            // Auto resize each column
+            
             foreach (ColumnHeader column in listViewCompleteContact.Columns)
             {
                 column.Width = -1;
             }
         }
+        
 
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {

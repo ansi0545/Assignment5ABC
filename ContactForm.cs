@@ -92,21 +92,15 @@ namespace Assignment5ABC
         #region Event Handlers
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.DialogResult == DialogResult.OK)
+            if (this.DialogResult == DialogResult.OK && !ValidateAndShowErrors())
             {
-                if (!ValidateAndShowErrors())
-                {
-                    e.Cancel = true;
-                }
+                e.Cancel = true;
             }
         }
 
         private void btnOKContactForm_Click(object sender, EventArgs e)
         {
-            if (ValidateAndShowErrors())
-            {
-                this.DialogResult = DialogResult.OK;
-            }
+            TryCloseForm();
         }
 
         private void btnCancelContactForm_Click(object sender, EventArgs e)
@@ -147,6 +141,14 @@ namespace Assignment5ABC
                 return false;
             }
         }
+        private void TryCloseForm()
+        {
+            if (ValidateAndShowErrors())
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+        }
+
         #endregion
 
         #region Text Changed Event Handlers

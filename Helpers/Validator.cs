@@ -20,5 +20,6 @@ namespace Assignment5ABC.Helpers
                 throw new ArgumentException("Invalid email format.");
             }
         }
+
     }
 }
