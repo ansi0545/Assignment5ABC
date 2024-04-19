@@ -29,7 +29,7 @@ namespace Assignment5ABC
 
         private void InitializeListView()
         {
-            
+
             listViewCompleteContact.View = View.Details;
             listViewCompleteContact.Columns.Add("ID", 50);
             listViewCompleteContact.Columns.Add("Name", 150);
@@ -42,13 +42,29 @@ namespace Assignment5ABC
             listViewCompleteContact.Columns.Add("Zip Code", 80);
             listViewCompleteContact.Columns.Add("Country", 100);
 
-            
+
             foreach (ColumnHeader column in listViewCompleteContact.Columns)
             {
                 column.Width = -1;
             }
         }
-        
+        private bool CheckCustomerSelected()
+        {
+            int selectedIndex = listBoxPartialData.SelectedIndex;
+            if (selectedIndex < 0)
+            {
+                MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        private void UpdateListView(Customer customer)
+        {
+            listViewCompleteContact.Items.Clear();
+            ListViewItem item = new ListViewItem(customer.ToCompleteString());
+            listViewCompleteContact.Items.Add(item);
+            ResizeListViewColumns(listViewCompleteContact);
+        }
 
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {
@@ -64,37 +80,37 @@ namespace Assignment5ABC
 
         private void btnEditMainForm_Click(object sender, EventArgs e)
         {
+            if (!CheckCustomerSelected()) return;
+
             int selectedIndex = listBoxPartialData.SelectedIndex;
-            if (selectedIndex >= 0)
+            using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo, "Edit customer"))
             {
-                using (ContactForm contactForm = new ContactForm(customerManager.Customers[selectedIndex].ContactInfo, "Edit customer"))
+                if (contactForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (contactForm.ShowDialog() == DialogResult.OK)
-                    {
-                        Customer updatedCustomer = customerManager.Customers[selectedIndex];
-                        updatedCustomer.ContactInfo = contactForm.Contact;
-                        customerManager.ChangeCustomerData(selectedIndex, updatedCustomer);
-                        UpdateListControls();
-                    }
+                    Customer updatedCustomer = customerManager.Customers[selectedIndex];
+                    updatedCustomer.ContactInfo = contactForm.Contact;
+                    customerManager.ChangeCustomerData(selectedIndex, updatedCustomer);
+                    UpdateListControls();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Please select a customer to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnDeleteMainForm_Click(object sender, EventArgs e)
         {
+            if (!CheckCustomerSelected()) return;
+
             int selectedIndex = listBoxPartialData.SelectedIndex;
-            if (selectedIndex >= 0)
+            customerManager.RemoveCustomer(selectedIndex);
+            UpdateListControls();
+        }
+
+        private void listBoxPartialData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedIndex = listBoxPartialData.SelectedIndex;
+            if (selectedIndex >= 0 && selectedIndex < customerManager.Customers.Count)
             {
-                customerManager.RemoveCustomer(selectedIndex);
-                UpdateListControls();
-            }
-            else
-            {
-                MessageBox.Show("Please select a customer to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Customer selectedCustomer = customerManager.Customers[selectedIndex];
+                UpdateListView(selectedCustomer);
             }
         }
 
@@ -105,29 +121,18 @@ namespace Assignment5ABC
 
         private void UpdateListControls()
         {
-            // Clear existing items
             listBoxPartialData.Items.Clear();
             listViewCompleteContact.Items.Clear();
-
-            // Add items to both list controls
             foreach (Customer customer in customerManager.Customers)
             {
                 listBoxPartialData.Items.Add(customer.ToString());
-
-                // Create a ListViewItem for the customer using ToCompleteString method
-                //ListViewItem item = new ListViewItem(customer.ToCompleteString());
-
-                // Add the ListViewItem to the ListView
-                //listViewCompleteContact.Items.Add(item);
             }
 
-            // Resize columns to fit content
             ResizeListViewColumns(listViewCompleteContact);
         }
 
         private void ResizeListViewColumns(ListView listView)
         {
-            // Auto resize each column
             foreach (ColumnHeader column in listView.Columns)
             {
                 listView.AutoResizeColumn(column.Index, ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -144,30 +149,8 @@ namespace Assignment5ABC
             if (selectedIndex >= 0)
             {
                 Customer selectedCustomer = customerManager.Customers[selectedIndex];
-                // Update details view or any other controls here
             }
         }
 
-        private void listBoxPartialData_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedIndex = listBoxPartialData.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < customerManager.Customers.Count)
-            {
-                // Clear existing items in listViewCompleteContact
-                listViewCompleteContact.Items.Clear();
-
-                // Get the selected customer
-                Customer selectedCustomer = customerManager.Customers[selectedIndex];
-
-                // Create a ListViewItem for the selected customer using ToCompleteString method
-                ListViewItem item = new ListViewItem(selectedCustomer.ToCompleteString());
-
-                // Add the ListViewItem to the ListView
-                listViewCompleteContact.Items.Add(item);
-
-                // Resize columns to fit content
-                ResizeListViewColumns(listViewCompleteContact);
-            }
-        }
     }
 }
