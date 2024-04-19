@@ -1,5 +1,6 @@
 ﻿using Assignment5ABC.ContactFiles;
-using System.Text.RegularExpressions;
+using Assignment5ABC.Helpers;
+
 
 namespace Assignment5ABC
 {
@@ -11,7 +12,7 @@ namespace Assignment5ABC
         public ContactForm()
         {
             InitializeComponent();
-            Contact = new Contact(); 
+            Contact = new Contact();
             InitializeCountries();
             SubscribeToEvents();
         }
@@ -27,7 +28,7 @@ namespace Assignment5ABC
 
         public ContactForm(Contact existingContact, string title) : this(existingContact)
         {
-            this.Text = title; 
+            this.Text = title;
         }
         #endregion
 
@@ -122,20 +123,15 @@ namespace Assignment5ABC
         #region Validation Methods
         internal bool CheckData()
         {
-            var emailRegex = new Regex(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$");
-            bool isEmailValid = emailRegex.IsMatch(txtBoxEmailBusinessContactForm.Text) &&
-                                emailRegex.IsMatch(txtBoxEmailPrivateContactForm.Text);
+            Validator.ValidateEmailFormat(txtBoxEmailBusinessContactForm.Text);
+            Validator.ValidateEmailFormat(txtBoxEmailPrivateContactForm.Text);
 
-            if (!isEmailValid)
-            {
-                throw new ArgumentException("Invalid email format.");
-            }
+            Validator.ValidateNotEmpty(txtBoxFirstName.Text, Constants.ErrorMessage);
+            Validator.ValidateNotEmpty(txtBoxLastName.Text, Constants.ErrorMessage);
+            Validator.ValidateNotEmpty(txtBoxCity.Text, Constants.ErrorMessage);
+            Validator.ValidateNotEmpty(comboBoxCountryContactList.Text, Constants.ErrorMessage);
 
-            return !string.IsNullOrEmpty(txtBoxFirstName.Text) &&
-                   !string.IsNullOrEmpty(txtBoxLastName.Text) &&
-                   !string.IsNullOrEmpty(txtBoxCity.Text) &&
-                   !string.IsNullOrEmpty(comboBoxCountryContactList.Text) &&
-                   isEmailValid;
+            return true;
         }
 
         private bool ValidateAndShowErrors()
@@ -207,11 +203,5 @@ namespace Assignment5ABC
             }
         }
         #endregion
-    }
-
-    public static class Constants
-    {
-        public const string ErrorTitle = "Error";
-        public const string ErrorMessage = "Please fill in all required fields.";
     }
 }
