@@ -9,7 +9,10 @@ namespace Assignment5ABC
         private CustomerManager customerManager;
         private ContactForm contactForm;
 
-        public MainForm()
+        /// <summary>
+        /// Initializes a new instance of the MainForm class.
+        /// </summary>
+         public MainForm()
         {
             InitializeComponent();
             customerManager = new CustomerManager();
@@ -18,6 +21,9 @@ namespace Assignment5ABC
             InitializeListView();
         }
 
+        /// <summary>
+        /// Subscribes to the events of the main form controls.
+        /// </summary>
         private void SubscribeToEvents()
         {
             btnAddMainForm.Click += btnAddMainForm_Click;
@@ -27,9 +33,11 @@ namespace Assignment5ABC
             listBoxPartialData.SelectedIndexChanged += listBoxPartialData_SelectedIndexChanged;
         }
 
+        /// <summary>
+        /// Initializes the ListView control with the necessary columns and settings.
+        /// </summary>
         private void InitializeListView()
         {
-
             listViewCompleteContact.View = View.Details;
             listViewCompleteContact.Columns.Add("ID", 50);
             listViewCompleteContact.Columns.Add("Name", 150);
@@ -48,7 +56,11 @@ namespace Assignment5ABC
                 column.Width = -1;
             }
         }
-        private bool CheckCustomerSelected()
+        /// <summary>
+        /// Checks if a customer is selected in the list box.
+        /// </summary>
+        /// <returns>True if a customer is selected, otherwise false.</returns>
+         private bool CheckCustomerSelected()
         {
             int selectedIndex = listBoxPartialData.SelectedIndex;
             if (selectedIndex < 0)
@@ -58,7 +70,11 @@ namespace Assignment5ABC
             }
             return true;
         }
-        private void UpdateListView(Customer customer)
+        /// <summary>
+        /// Updates the ListView control with the provided customer information.
+        /// </summary>
+        /// <param name="customer">The customer object containing the information to be displayed.</param>
+         private void UpdateListView(Customer customer)
         {
             listViewCompleteContact.Items.Clear();
             ListViewItem item = new ListViewItem(customer.ToCompleteString());
@@ -66,6 +82,12 @@ namespace Assignment5ABC
             ResizeListViewColumns(listViewCompleteContact);
         }
 
+        /// <summary>
+        /// Event handler for the click event of the "Add" button on the main form.
+        /// Opens a contact form to add a new customer and updates the list controls if the operation is successful.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void btnAddMainForm_Click(object sender, EventArgs e)
         {
             using (ContactForm contactForm = new ContactForm(null, "Add new customer"))
@@ -78,6 +100,11 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Event handler for the "Edit" button click event in the main form.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         private void btnEditMainForm_Click(object sender, EventArgs e)
         {
             if (!CheckCustomerSelected()) return;
@@ -95,6 +122,12 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Event handler for the click event of the "Delete" button on the main form.
+        /// Removes the selected customer from the customer manager and updates the list controls.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
         private void btnDeleteMainForm_Click(object sender, EventArgs e)
         {
             if (!CheckCustomerSelected()) return;
@@ -104,7 +137,13 @@ namespace Assignment5ABC
             UpdateListControls();
         }
 
-        private void listBoxPartialData_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for the SelectedIndexChanged event of the listBoxPartialData control.
+        /// Updates the ListView control with the data of the selected customer.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
+         private void listBoxPartialData_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedIndex = listBoxPartialData.SelectedIndex;
             if (selectedIndex >= 0 && selectedIndex < customerManager.Customers.Count)
@@ -114,11 +153,18 @@ namespace Assignment5ABC
             }
         }
 
-        private int GetSelectedIndex()
+        /// <summary>
+        /// Gets the index of the selected item in the listViewCompleteContact control.
+        /// </summary>
+        /// <returns>The index of the selected item, or -1 if no item is selected.</returns>
+         private int GetSelectedIndex()
         {
             return listViewCompleteContact.SelectedIndices.Count > 0 ? listViewCompleteContact.SelectedIndices[0] : -1;
         }
 
+        /// <summary>
+        /// Updates the list controls by populating the listBoxPartialData and listViewCompleteContact controls with customer data.
+        /// </summary>
         private void UpdateListControls()
         {
             listBoxPartialData.Items.Clear();
@@ -131,6 +177,10 @@ namespace Assignment5ABC
             ResizeListViewColumns(listViewCompleteContact);
         }
 
+        /// <summary>
+        /// Resizes the columns of a ListView control to fit the content.
+        /// </summary>
+        /// <param name="listView">The ListView control to resize.</param>
         private void ResizeListViewColumns(ListView listView)
         {
             foreach (ColumnHeader column in listView.Columns)
@@ -143,6 +193,12 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Event handler for the SelectedIndexChanged event of the listViewCompleteContact control.
+        /// Retrieves the selected index from the listViewCompleteContact control and retrieves the corresponding Customer object from the customerManager.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
         private void listViewCompleteContact_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedIndex = GetSelectedIndex();

@@ -9,6 +9,9 @@ namespace Assignment5ABC
         public Contact Contact { get; private set; }
 
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContactForm"/> class.
+        /// </summary>
         public ContactForm()
         {
             InitializeComponent();
@@ -17,6 +20,10 @@ namespace Assignment5ABC
             SubscribeToEvents();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContactForm"/> class.
+        /// </summary>
+        /// <param name="existingContact">The existing contact to populate the form with.</param>
         public ContactForm(Contact existingContact) : this()
         {
             if (existingContact != null)
@@ -26,6 +33,11 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContactForm"/> class with an existing contact and a title.
+        /// </summary>
+        /// <param name="existingContact">The existing contact to be displayed in the form.</param>
+        /// <param name="title">The title of the form.</param>
         public ContactForm(Contact existingContact, string title) : this(existingContact)
         {
             this.Text = title;
@@ -33,6 +45,9 @@ namespace Assignment5ABC
         #endregion
 
         #region Initialization Methods
+        /// <summary>
+        /// Initializes the countries in the contact form's country dropdown list.
+        /// </summary>
         private void InitializeCountries()
         {
             foreach (var country in Enum.GetValues(typeof(Assignment5ABC.ContactFiles.Countries)))
@@ -41,6 +56,9 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Subscribes to events for the ContactForm.
+        /// </summary>
         private void SubscribeToEvents()
         {
             this.FormClosing += ContactForm_FormClosing;
@@ -58,6 +76,9 @@ namespace Assignment5ABC
         #endregion
 
         #region Form Field Methods
+        /// <summary>
+        /// Clears all the fields in the contact form.
+        /// </summary>
         public void ClearFields()
         {
             txtBoxLastName.Clear();
@@ -72,6 +93,9 @@ namespace Assignment5ABC
             comboBoxCountryContactList.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Updates the form fields with the values from the Contact object.
+        /// </summary>
         internal void UpdateFormFields()
         {
             txtBoxFirstName.Text = Contact.FirstName;
@@ -90,6 +114,11 @@ namespace Assignment5ABC
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// Event handler for the FormClosing event of the ContactForm.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">A FormClosingEventArgs that contains the event data.</param>
         private void ContactForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.DialogResult == DialogResult.OK && !ValidateAndShowErrors())
@@ -98,6 +127,11 @@ namespace Assignment5ABC
             }
         }
 
+        /// <summary>
+        /// Event handler for the click event of the OK button in the ContactForm.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void btnOKContactForm_Click(object sender, EventArgs e)
         {
             TryCloseForm();
@@ -115,6 +149,10 @@ namespace Assignment5ABC
         #endregion
 
         #region Validation Methods
+        /// <summary>
+        /// Checks the data entered in the contact form for validity.
+        /// </summary>
+        /// <returns>True if the data is valid; otherwise, false.</returns>
         internal bool CheckData()
         {
             Validator.ValidateEmailFormat(txtBoxEmailBusinessContactForm.Text);
@@ -128,6 +166,10 @@ namespace Assignment5ABC
             return true;
         }
 
+        /// <summary>
+        /// Validates the data and displays any errors in a message box.
+        /// </summary>
+        /// <returns>True if the data is valid; otherwise, false.</returns>
         private bool ValidateAndShowErrors()
         {
             try
@@ -141,6 +183,10 @@ namespace Assignment5ABC
                 return false;
             }
         }
+        /// <summary>
+        /// Tries to close the form by validating and showing errors.
+        /// If there are no errors, sets the DialogResult to OK.
+        /// </summary>
         private void TryCloseForm()
         {
             if (ValidateAndShowErrors())
@@ -197,6 +243,12 @@ namespace Assignment5ABC
             Contact.Address.ZipCode = txtBoxZipCode.Text;
         }
 
+        /// <summary>
+        /// Event handler for the SelectedIndexChanged event of the comboBoxCountryContactList control.
+        /// Updates the country in the Contact's address based on the selected item in the comboBox.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void comboBoxCountryContactList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCountryContactList.SelectedItem != null)

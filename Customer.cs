@@ -21,7 +21,10 @@ namespace Assignment5ABC
             ContactInfo = new Contact();
         }
 
-        public Customer(Contact contactInfo)
+        /// <summary>
+        /// Represents a customer.
+        /// </summary>
+         public Customer(Contact contactInfo)
         {
             if (contactInfo == null)
             {
@@ -33,6 +36,10 @@ namespace Assignment5ABC
         }
 
        
+        /// <summary>
+        /// Returns a string representation of the customer object.
+        /// </summary>
+        /// <returns>A string representation of the customer object.</returns>
         public override string ToString()
         {
             if (ContactInfo != null)
@@ -45,7 +52,11 @@ namespace Assignment5ABC
             }
         }
 
-        public string[] ToCompleteString()
+        /// <summary>
+        /// Returns an array of strings representing the complete information of the customer.
+        /// </summary>
+        /// <returns>An array of strings containing the customer's ID, full name, phone numbers, email addresses, and address.</returns>
+         public string[] ToCompleteString()
         {
             if (ContactInfo == null)
             {

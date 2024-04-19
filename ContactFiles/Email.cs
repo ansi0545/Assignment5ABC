@@ -1,17 +1,32 @@
 ﻿// Email.cs
 namespace Assignment5ABC.ContactFiles
 {
+    /// <summary>
+    /// Represents an email address.
+    /// </summary>
     internal class Email
     {
         private string personal;
         private string work;
 
+        /// <summary>
+        /// Gets or sets the personal email address.
+        /// </summary>
         public string Personal { get => personal; set => personal = value; }
+
+        /// <summary>
+        /// Gets or sets the work email address.
+        /// </summary>
         public string Work { get => work; set => work = value; }
 
         // Constructor
         public Email() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Email"/> class with the specified work and personal email addresses.
+        /// </summary>
+        /// <param name="workMail">The work email address.</param>
+        /// <param name="personalMail">The personal email address.</param>
         public Email(string workMail, string personalMail)
         {
             Work = workMail;
@@ -19,6 +34,10 @@ namespace Assignment5ABC.ContactFiles
         }
 
         // Copy constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Email"/> class by copying the values from another <see cref="Email"/> object.
+        /// </summary>
+        /// <param name="other">The <see cref="Email"/> object to copy.</param>
         public Email(Email other)
         {
             Personal = other.Personal;
@@ -26,13 +45,20 @@ namespace Assignment5ABC.ContactFiles
         }
 
         // Method to get string headings
+        /// <summary>
+        /// Gets the string representation of the column headings for the email addresses.
+        /// </summary>
         public string GetToStringItemsHeadings
         {
             get { return string.Format("{0,-20} {1, -20}", "Office EmailData", "Private EmailData"); }
         }
 
         // Override ToString() method
-        public override string ToString()
+        /// <summary>
+        /// Returns a string representation of the email addresses.
+        /// </summary>
+        /// <returns>A string representation of the email addresses.</returns>
+         public override string ToString()
         {
             string strOut = "\n" + "Emails" + "\n";
 

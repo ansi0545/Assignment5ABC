@@ -1,5 +1,8 @@
 ﻿namespace Assignment5ABC.Helpers
 {
+    /// <summary>
+    /// Contains constant values used in the application.
+    /// </summary>
     public static class Constants
     {
         public const string ErrorTitle = "Error";
