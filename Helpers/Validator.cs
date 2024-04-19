@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using static Assignment5ABC.Helpers.Constants;
 
 namespace Assignment5ABC.Helpers
 {
@@ -17,7 +18,7 @@ namespace Assignment5ABC.Helpers
             var emailRegex = new Regex(@"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$");
             if (!emailRegex.IsMatch(email))
             {
-                throw new ArgumentException("Invalid email format.");
+                throw new ArgumentException(InvalidEmailFormat);
             }
         }
 

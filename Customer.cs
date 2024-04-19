@@ -1,4 +1,5 @@
 ﻿using Assignment5ABC.ContactFiles;
+using static Assignment5ABC.Helpers.Constants;
 using System;
 
 namespace Assignment5ABC
@@ -16,9 +17,10 @@ namespace Assignment5ABC
         // Constructor
         public Customer()
         {
-            id = nextId++; // Assign ID and increment for the next customer
+            id = nextId++;
             ContactInfo = new Contact();
         }
+
         public Customer(Contact contactInfo)
         {
             if (contactInfo == null)
@@ -30,7 +32,7 @@ namespace Assignment5ABC
             ContactInfo = contactInfo;
         }
 
-        // Override ToString method to display customer information
+       
         public override string ToString()
         {
             if (ContactInfo != null)
@@ -39,7 +41,7 @@ namespace Assignment5ABC
             }
             else
             {
-                return "No Contact Information Available";
+                return NoContactInformationAvailable;
             }
         }
 
@@ -47,7 +49,7 @@ namespace Assignment5ABC
         {
             if (ContactInfo == null)
             {
-                throw new InvalidOperationException("ContactInfo is null.");
+                throw new InvalidOperationException(ContactInfoIsNull);
             }
 
             return new string[]
